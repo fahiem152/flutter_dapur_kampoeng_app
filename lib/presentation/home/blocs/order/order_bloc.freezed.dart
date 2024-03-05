@@ -20,23 +20,23 @@ mixin _$OrderEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function(List<ProductQuantity> items, int discount,
-            int tax, int serviceCharge, int paymentAmount)
+            int discountAmount, int tax, int serviceCharge, int paymentAmount)
         order,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(List<ProductQuantity> items, int discount, int tax,
-            int serviceCharge, int paymentAmount)?
+    TResult? Function(List<ProductQuantity> items, int discount,
+            int discountAmount, int tax, int serviceCharge, int paymentAmount)?
         order,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(List<ProductQuantity> items, int discount, int tax,
-            int serviceCharge, int paymentAmount)?
+    TResult Function(List<ProductQuantity> items, int discount,
+            int discountAmount, int tax, int serviceCharge, int paymentAmount)?
         order,
     required TResult orElse(),
   }) =>
@@ -120,7 +120,7 @@ class _$StartedImpl implements _Started {
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function(List<ProductQuantity> items, int discount,
-            int tax, int serviceCharge, int paymentAmount)
+            int discountAmount, int tax, int serviceCharge, int paymentAmount)
         order,
   }) {
     return started();
@@ -130,8 +130,8 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(List<ProductQuantity> items, int discount, int tax,
-            int serviceCharge, int paymentAmount)?
+    TResult? Function(List<ProductQuantity> items, int discount,
+            int discountAmount, int tax, int serviceCharge, int paymentAmount)?
         order,
   }) {
     return started?.call();
@@ -141,8 +141,8 @@ class _$StartedImpl implements _Started {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(List<ProductQuantity> items, int discount, int tax,
-            int serviceCharge, int paymentAmount)?
+    TResult Function(List<ProductQuantity> items, int discount,
+            int discountAmount, int tax, int serviceCharge, int paymentAmount)?
         order,
     required TResult orElse(),
   }) {
@@ -197,6 +197,7 @@ abstract class _$$OrderImplCopyWith<$Res> {
   $Res call(
       {List<ProductQuantity> items,
       int discount,
+      int discountAmount,
       int tax,
       int serviceCharge,
       int paymentAmount});
@@ -215,6 +216,7 @@ class __$$OrderImplCopyWithImpl<$Res>
   $Res call({
     Object? items = null,
     Object? discount = null,
+    Object? discountAmount = null,
     Object? tax = null,
     Object? serviceCharge = null,
     Object? paymentAmount = null,
@@ -227,6 +229,10 @@ class __$$OrderImplCopyWithImpl<$Res>
       null == discount
           ? _value.discount
           : discount // ignore: cast_nullable_to_non_nullable
+              as int,
+      null == discountAmount
+          ? _value.discountAmount
+          : discountAmount // ignore: cast_nullable_to_non_nullable
               as int,
       null == tax
           ? _value.tax
@@ -247,8 +253,8 @@ class __$$OrderImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$OrderImpl implements _Order {
-  const _$OrderImpl(final List<ProductQuantity> items, this.discount, this.tax,
-      this.serviceCharge, this.paymentAmount)
+  const _$OrderImpl(final List<ProductQuantity> items, this.discount,
+      this.discountAmount, this.tax, this.serviceCharge, this.paymentAmount)
       : _items = items;
 
   final List<ProductQuantity> _items;
@@ -262,6 +268,8 @@ class _$OrderImpl implements _Order {
   @override
   final int discount;
   @override
+  final int discountAmount;
+  @override
   final int tax;
   @override
   final int serviceCharge;
@@ -270,7 +278,7 @@ class _$OrderImpl implements _Order {
 
   @override
   String toString() {
-    return 'OrderEvent.order(items: $items, discount: $discount, tax: $tax, serviceCharge: $serviceCharge, paymentAmount: $paymentAmount)';
+    return 'OrderEvent.order(items: $items, discount: $discount, discountAmount: $discountAmount, tax: $tax, serviceCharge: $serviceCharge, paymentAmount: $paymentAmount)';
   }
 
   @override
@@ -281,6 +289,8 @@ class _$OrderImpl implements _Order {
             const DeepCollectionEquality().equals(other._items, _items) &&
             (identical(other.discount, discount) ||
                 other.discount == discount) &&
+            (identical(other.discountAmount, discountAmount) ||
+                other.discountAmount == discountAmount) &&
             (identical(other.tax, tax) || other.tax == tax) &&
             (identical(other.serviceCharge, serviceCharge) ||
                 other.serviceCharge == serviceCharge) &&
@@ -293,6 +303,7 @@ class _$OrderImpl implements _Order {
       runtimeType,
       const DeepCollectionEquality().hash(_items),
       discount,
+      discountAmount,
       tax,
       serviceCharge,
       paymentAmount);
@@ -308,34 +319,37 @@ class _$OrderImpl implements _Order {
   TResult when<TResult extends Object?>({
     required TResult Function() started,
     required TResult Function(List<ProductQuantity> items, int discount,
-            int tax, int serviceCharge, int paymentAmount)
+            int discountAmount, int tax, int serviceCharge, int paymentAmount)
         order,
   }) {
-    return order(items, discount, tax, serviceCharge, paymentAmount);
+    return order(
+        items, discount, discountAmount, tax, serviceCharge, paymentAmount);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? started,
-    TResult? Function(List<ProductQuantity> items, int discount, int tax,
-            int serviceCharge, int paymentAmount)?
+    TResult? Function(List<ProductQuantity> items, int discount,
+            int discountAmount, int tax, int serviceCharge, int paymentAmount)?
         order,
   }) {
-    return order?.call(items, discount, tax, serviceCharge, paymentAmount);
+    return order?.call(
+        items, discount, discountAmount, tax, serviceCharge, paymentAmount);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? started,
-    TResult Function(List<ProductQuantity> items, int discount, int tax,
-            int serviceCharge, int paymentAmount)?
+    TResult Function(List<ProductQuantity> items, int discount,
+            int discountAmount, int tax, int serviceCharge, int paymentAmount)?
         order,
     required TResult orElse(),
   }) {
     if (order != null) {
-      return order(items, discount, tax, serviceCharge, paymentAmount);
+      return order(
+          items, discount, discountAmount, tax, serviceCharge, paymentAmount);
     }
     return orElse();
   }
@@ -376,12 +390,14 @@ abstract class _Order implements OrderEvent {
   const factory _Order(
       final List<ProductQuantity> items,
       final int discount,
+      final int discountAmount,
       final int tax,
       final int serviceCharge,
       final int paymentAmount) = _$OrderImpl;
 
   List<ProductQuantity> get items;
   int get discount;
+  int get discountAmount;
   int get tax;
   int get serviceCharge;
   int get paymentAmount;

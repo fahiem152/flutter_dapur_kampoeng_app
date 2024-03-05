@@ -1,6 +1,7 @@
 import 'package:dapur_kampoeng_app/core/extensions/build_context_ext.dart';
 import 'package:dapur_kampoeng_app/core/extensions/string_text.dart';
 import 'package:dapur_kampoeng_app/presentation/home/blocs/checkout/checkout_bloc.dart';
+import 'package:dapur_kampoeng_app/presentation/home/blocs/local_discount/local_discount_bloc.dart';
 import 'package:dapur_kampoeng_app/presentation/settings/blocs/discount/discount_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,7 +18,10 @@ class DiscountDialog extends StatefulWidget {
 class _DiscountDialogState extends State<DiscountDialog> {
   @override
   void initState() {
-    context.read<DiscountBloc>().add(const DiscountEvent.getDiscounts());
+    context
+        .read<LocalDiscountBloc>()
+        .add(const LocalDiscountEvent.getLocalDiscounts());
+    // context.read<DiscountBloc>().add(const DiscountEvent.getDiscounts());
     super.initState();
   }
 
@@ -52,7 +56,7 @@ class _DiscountDialogState extends State<DiscountDialog> {
           ),
         ],
       ),
-      content: BlocBuilder<DiscountBloc, DiscountState>(
+      content: BlocBuilder<LocalDiscountBloc, LocalDiscountState>(
         builder: (context, state) {
           return state.maybeWhen(
             orElse: () => const SizedBox.shrink(),
@@ -68,7 +72,7 @@ class _DiscountDialogState extends State<DiscountDialog> {
                       (discount) => ListTile(
                         title: Text('Nama Diskon: ${discount.name}'),
                         subtitle: Text(
-                            'Potongan harga (${discount.value!.replaceAll('.00', '').toIntegerFromText}%)'),
+                            'Potongan harga (${discount.value.toString().replaceAll('.00', '').toIntegerFromText}%)'),
                         contentPadding: EdgeInsets.zero,
                         textColor: AppColors.primary,
                         trailing: Checkbox(
@@ -95,6 +99,49 @@ class _DiscountDialogState extends State<DiscountDialog> {
           );
         },
       ),
+      // content: BlocBuilder<DiscountBloc, DiscountState>(
+      //   builder: (context, state) {
+      //     return state.maybeWhen(
+      //       orElse: () => const SizedBox.shrink(),
+      //       loading: () => const Center(
+      //         child: CircularProgressIndicator(),
+      //       ),
+      //       loaded: (discounts) {
+      //         return Column(
+      //           crossAxisAlignment: CrossAxisAlignment.start,
+      //           mainAxisSize: MainAxisSize.min,
+      //           children: discounts
+      //               .map(
+      //                 (discount) => ListTile(
+      //                   title: Text('Nama Diskon: ${discount.name}'),
+      //                   subtitle: Text(
+      //                       'Potongan harga (${discount.value!.replaceAll('.00', '').toIntegerFromText}%)'),
+      //                   contentPadding: EdgeInsets.zero,
+      //                   textColor: AppColors.primary,
+      //                   trailing: Checkbox(
+      //                     value: discount.id == discountIdSelected,
+      //                     onChanged: (value) {
+      //                       setState(() {
+      //                         discountIdSelected = discount.id!;
+      //                         context.read<CheckoutBloc>().add(
+      //                               CheckoutEvent.addDiscount(
+      //                                 discount,
+      //                               ),
+      //                             );
+      //                       });
+      //                     },
+      //                   ),
+      //                   onTap: () {
+      //                     // context.pop();
+      //                   },
+      //                 ),
+      //               )
+      //               .toList(),
+      //         );
+      //       },
+      //     );
+      //   },
+      // ),
     );
   }
 }

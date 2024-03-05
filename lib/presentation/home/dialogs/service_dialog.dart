@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 
 import '../../../core/constants/colors.dart';
 
-
-
 class ServiceDialog extends StatelessWidget {
   const ServiceDialog({super.key});
 

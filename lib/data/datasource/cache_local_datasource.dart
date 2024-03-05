@@ -3,16 +3,18 @@ import 'dart:developer';
 import 'package:dapur_kampoeng_app/data/models/response/product_response_model.dart';
 import 'package:dapur_kampoeng_app/presentation/home/models/order_model.dart';
 import 'package:dapur_kampoeng_app/presentation/home/models/product_quantity.dart';
+import 'package:dapur_kampoeng_app/presentation/settings/models/discount_model.dart';
 import 'package:sqflite/sqflite.dart';
 
-class ProductLocalDatasource {
-  ProductLocalDatasource._init();
+class CacheLocalDatasource {
+  CacheLocalDatasource._init();
 
-  static final ProductLocalDatasource instance = ProductLocalDatasource._init();
+  static final CacheLocalDatasource instance = CacheLocalDatasource._init();
 
   final String tableProduct = 'products';
   final String tableOrder = 'orders';
   final String tableOrderItem = 'order_items';
+  final String tableDiscount = 'discounts';
 
   static Database? _database;
 
@@ -42,6 +44,7 @@ class ProductLocalDatasource {
         sub_total INTEGER,
         tax INTEGER,
         discount INTEGER,
+        discount_amount INTEGER,
         service_charge INTEGER,
         total INTEGER,
         payment_method TEXT,
@@ -62,6 +65,14 @@ class ProductLocalDatasource {
         price INTEGER
       )
     ''');
+    await db.execute('''
+    CREATE TABLE $tableDiscount (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT,
+        description TEXT,
+        value INTEGER
+      )
+    ''');
   }
 
   Future<Database> _initDB(String filePath) async {
@@ -72,8 +83,25 @@ class ProductLocalDatasource {
 
   Future<Database> get database async {
     if (_database != null) return _database!;
-    _database = await _initDB('dbresto16.db');
+    _database = await _initDB('dbresto21.db');
     return _database!;
+  }
+
+  Future<void> saveDiscount(List<DiscountModel> discounts) async {
+    final db = await instance.database;
+    for (var discount in discounts) {
+      await db.insert(tableDiscount, discount.toMap(),
+          conflictAlgorithm: ConflictAlgorithm.replace);
+      log('inserted success ${discount.name}');
+    }
+  }
+
+  Future<List<DiscountModel>> getDiscounts() async {
+    final db = await instance.database;
+    final List<Map<String, dynamic>> maps = await db.query(tableDiscount);
+    return List.generate(maps.length, (i) {
+      return DiscountModel.fromLocalMap(maps[i]);
+    });
   }
 
   //save order
@@ -141,9 +169,27 @@ class ProductLocalDatasource {
     });
   }
 
+  Future<List<OrderModel>> getAllOrder(
+    DateTime start,
+    DateTime end,
+  ) async {
+    final db = await instance.database;
+    final List<Map<String, dynamic>> maps = await db.query(
+      tableOrder,
+    );
+    return List.generate(maps.length, (i) {
+      return OrderModel.fromMap(maps[i]);
+    });
+  }
+
   //delete all products
   Future<void> deleteAllProducts() async {
     final db = await instance.database;
     await db.delete(tableProduct);
+  }
+
+  Future<void> deleteAllDiscounts() async {
+    final db = await instance.database;
+    await db.delete(tableDiscount);
   }
 }

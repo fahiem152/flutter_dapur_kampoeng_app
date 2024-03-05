@@ -4,6 +4,7 @@ import 'package:dapur_kampoeng_app/data/datasource/auth_local_datasource.dart';
 import 'package:dapur_kampoeng_app/presentation/auth/login_page.dart';
 import 'package:dapur_kampoeng_app/presentation/home/pages/home_page.dart';
 import 'package:dapur_kampoeng_app/presentation/home/widgets/nav_item.dart';
+import 'package:dapur_kampoeng_app/presentation/report/pages/report_page.dart';
 import 'package:dapur_kampoeng_app/presentation/settings/pages/settings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,9 +24,8 @@ class _DashboardPageState extends State<DashboardPage> {
 
   final List<Widget> _pages = [
     const HomePage(),
-    // const Center(child: Text('This is page 1')),
     const Center(child: Text('This is page 2')),
-    const Center(child: Text('This is page 3')),
+    const ReportPage(),
     // const Center(child: Text('This is page 4')),
     const SettingsPage(),
     // const ManagePrinterPage(),

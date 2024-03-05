@@ -548,6 +548,7 @@ class _HomePageState extends State<HomePage> {
                                           return 0;
                                         }
                                         return discount.value!
+                                            .toString()
                                             .replaceAll('.00', '')
                                             .toIntegerFromText;
                                       });

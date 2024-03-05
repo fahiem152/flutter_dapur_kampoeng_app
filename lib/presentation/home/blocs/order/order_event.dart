@@ -6,6 +6,7 @@ class OrderEvent with _$OrderEvent {
   const factory OrderEvent.order(
     List<ProductQuantity> items,
     int discount,
+    int discountAmount,
     int tax,
     int serviceCharge,
     int paymentAmount,

@@ -2,7 +2,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'package:dapur_kampoeng_app/data/datasource/product_local_datasource.dart';
+import 'package:dapur_kampoeng_app/data/datasource/cache_local_datasource.dart';
 import 'package:dapur_kampoeng_app/data/models/response/product_response_model.dart';
 
 part 'local_product_bloc.freezed.dart';
@@ -10,7 +10,7 @@ part 'local_product_event.dart';
 part 'local_product_state.dart';
 
 class LocalProductBloc extends Bloc<LocalProductEvent, LocalProductState> {
-  final ProductLocalDatasource datasource;
+  final CacheLocalDatasource datasource;
   LocalProductBloc(
     this.datasource,
   ) : super(const _Initial()) {

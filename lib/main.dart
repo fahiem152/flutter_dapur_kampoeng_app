@@ -2,17 +2,25 @@ import 'package:dapur_kampoeng_app/core/constants/colors.dart';
 import 'package:dapur_kampoeng_app/data/datasource/auth_local_datasource.dart';
 import 'package:dapur_kampoeng_app/data/datasource/auth_remote_datasource.dart';
 import 'package:dapur_kampoeng_app/data/datasource/discount_remote_datasource.dart';
+import 'package:dapur_kampoeng_app/data/datasource/order_item_remote_datasource.dart';
 import 'package:dapur_kampoeng_app/data/datasource/order_remote_datasource.dart';
-import 'package:dapur_kampoeng_app/data/datasource/product_local_datasource.dart';
+import 'package:dapur_kampoeng_app/data/datasource/cache_local_datasource.dart';
 import 'package:dapur_kampoeng_app/data/datasource/product_remote_datasource.dart';
 import 'package:dapur_kampoeng_app/presentation/auth/bloc/login/login_bloc.dart';
 import 'package:dapur_kampoeng_app/presentation/auth/bloc/logout/logout_bloc.dart';
 import 'package:dapur_kampoeng_app/presentation/auth/login_page.dart';
 import 'package:dapur_kampoeng_app/presentation/home/blocs/checkout/checkout_bloc.dart';
+import 'package:dapur_kampoeng_app/presentation/home/blocs/local_discount/local_discount_bloc.dart';
 import 'package:dapur_kampoeng_app/presentation/home/blocs/local_product/local_product_bloc.dart';
 import 'package:dapur_kampoeng_app/presentation/home/blocs/order/order_bloc.dart';
 import 'package:dapur_kampoeng_app/presentation/home/pages/dashboard_page.dart';
+import 'package:dapur_kampoeng_app/presentation/report/blocs/item_sales_report/item_sales_report_bloc.dart';
+import 'package:dapur_kampoeng_app/presentation/report/blocs/summary_report/summary_report_bloc.dart';
+import 'package:dapur_kampoeng_app/presentation/report/blocs/transaction_report/transaction_report_bloc.dart';
+import 'package:dapur_kampoeng_app/presentation/settings/blocs/add_discount/add_discount_bloc.dart';
+import 'package:dapur_kampoeng_app/presentation/settings/blocs/delete_discount/delete_discount_bloc.dart';
 import 'package:dapur_kampoeng_app/presentation/settings/blocs/discount/discount_bloc.dart';
+import 'package:dapur_kampoeng_app/presentation/settings/blocs/edit_discount/edit_discount_bloc.dart';
 import 'package:dapur_kampoeng_app/presentation/settings/blocs/sync_order/sync_order_bloc.dart';
 import 'package:dapur_kampoeng_app/presentation/settings/blocs/sync_product/sync_product_bloc.dart';
 import 'package:flutter/material.dart';
@@ -38,8 +46,10 @@ class MyApp extends StatelessWidget {
           create: (context) => LogoutBloc(AuthRemoteDatasource()),
         ),
         BlocProvider(
-          create: (context) =>
-              LocalProductBloc(ProductLocalDatasource.instance),
+          create: (context) => LocalProductBloc(CacheLocalDatasource.instance),
+        ),
+        BlocProvider(
+          create: (context) => LocalDiscountBloc(CacheLocalDatasource.instance),
         ),
         BlocProvider(
           create: (context) => SyncProductBloc(ProductRemoteDatasource()),
@@ -55,6 +65,24 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => DiscountBloc(DiscountRemoteDatasource()),
+        ),
+        BlocProvider(
+          create: (context) => AddDiscountBloc(DiscountRemoteDatasource()),
+        ),
+        BlocProvider(
+          create: (context) => EditDiscountBloc(DiscountRemoteDatasource()),
+        ),
+        BlocProvider(
+          create: (context) => DeleteDiscountBloc(DiscountRemoteDatasource()),
+        ),
+        BlocProvider(
+          create: (context) => TransactionReportBloc(OrderRemoteDatasource()),
+        ),
+        BlocProvider(
+          create: (context) => ItemSalesReportBloc(OrderItemRemoteDatasource()),
+        ),
+        BlocProvider(
+          create: (context) => SummaryReportBloc(OrderRemoteDatasource()),
         ),
       ],
       child: MaterialApp(

@@ -231,12 +231,15 @@ class _ConfirmPaymentPageState extends State<ConfirmPaymentPage> {
                                         return 0;
                                       }
                                       return discount.value!
+                                          .toString()
                                           .replaceAll('.00', '')
                                           .toIntegerFromText;
                                     });
 
-                                final subTotal =
-                                    price - (discount / 100 * price);
+                                final subTotal = price -
+                                    (discount / 100 * price) -
+                                    (5 / 100 * price);
+
                                 final finalTax = subTotal * 0.11;
                                 return Text(
                                   '0.11 % (${finalTax.toInt().currencyFormatRp})',
@@ -267,6 +270,7 @@ class _ConfirmPaymentPageState extends State<ConfirmPaymentPage> {
                                         return 0;
                                       }
                                       return discount.value!
+                                          .toString()
                                           .replaceAll('.00', '')
                                           .toIntegerFromText;
                                     });
@@ -291,6 +295,58 @@ class _ConfirmPaymentPageState extends State<ConfirmPaymentPage> {
                                 final finalDiscount = discount / 100 * subTotal;
                                 return Text(
                                   finalDiscount.toInt().currencyFormatRp,
+                                  style: TextStyle(
+                                    color: AppColors.primary,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                        const SpaceHeight(16.0),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Service',
+                              style: TextStyle(color: AppColors.grey),
+                            ),
+                            BlocBuilder<CheckoutBloc, CheckoutState>(
+                              builder: (context, state) {
+                                final service = state.maybeWhen(
+                                    orElse: () => 0,
+                                    loaded: (products, discount, tax,
+                                        serviceCharge) {
+                                      if (serviceCharge == null) {
+                                        return 0;
+                                      }
+                                      return serviceCharge
+                                          .toString()
+                                          .replaceAll('.00', '')
+                                          .toIntegerFromText;
+                                    });
+
+                                final subTotal = state.maybeWhen(
+                                    orElse: () => 0,
+                                    loaded: (
+                                      products,
+                                      discounts,
+                                      tax,
+                                      serviceCharge,
+                                    ) =>
+                                        products.fold(
+                                          0,
+                                          (previousValue, element) =>
+                                              previousValue +
+                                              (element.product.price!
+                                                      .toIntegerFromText *
+                                                  element.quantity),
+                                        ));
+
+                                final finalService = 5 / 100 * subTotal;
+                                return Text(
+                                  finalService.toInt().currencyFormatRp,
                                   style: TextStyle(
                                     color: AppColors.primary,
                                     fontWeight: FontWeight.w600,
@@ -376,17 +432,23 @@ class _ConfirmPaymentPageState extends State<ConfirmPaymentPage> {
                                         return 0;
                                       }
                                       return discount.value!
+                                          .toString()
                                           .replaceAll('.00', '')
                                           .toIntegerFromText;
                                     });
 
-                                final subTotal =
-                                    price - (discount / 100 * price);
+                                final subTotal = price -
+                                    (discount / 100 * price) -
+                                    (5 / 100 * price);
                                 final tax = subTotal * 0.11;
                                 final total = subTotal + tax;
 
                                 totalPriceController.text =
                                     total.ceil().toString();
+                                log("bbsubTotal: $subTotal");
+                                log("bbtax: $tax");
+                                log("bbtotal: $total");
+                                log("bbtotalPriceController .text.toIntegerFromText,: ${totalPriceController.text.toIntegerFromText}");
                                 return Text(
                                   total.ceil().currencyFormatRp,
                                   style: const TextStyle(
@@ -540,6 +602,7 @@ class _ConfirmPaymentPageState extends State<ConfirmPaymentPage> {
                                             return 0;
                                           }
                                           return discount.value!
+                                              .toString()
                                               .replaceAll('.00', '')
                                               .toIntegerFromText;
                                         });
@@ -561,14 +624,19 @@ class _ConfirmPaymentPageState extends State<ConfirmPaymentPage> {
                                                 element.quantity),
                                       ),
                                     );
+                                    final finalDiscount =
+                                        discount / 100 * price;
+                                    final finalService = 5 / 100 * price;
+                                    final subTotal = price -
+                                        (discount / 100 * price) -
+                                        (5 / 100 * price);
 
-                                    final subTotal =
-                                        price - (discount / 100 * price);
                                     final finalTax = subTotal * 0.11;
-                                    log("zzprice: $price");
-                                    log("zzsubTotal: $subTotal");
-                                    log("zzfinalTax: $finalTax");
-                                    log("zztotalPriceController .text.toIntegerFromText,: ${totalPriceController.text.toIntegerFromText}");
+
+                                    // log("zzprice: $price");
+                                    // log("zzsubTotal: $subTotal");
+                                    // log("zzfinalTax: $finalTax");
+                                    // log("zztotalPriceController .text.toIntegerFromText,: ${totalPriceController.text.toIntegerFromText}");
                                     List<ProductQuantity> items =
                                         state.maybeWhen(
                                       orElse: () => [],
@@ -580,6 +648,8 @@ class _ConfirmPaymentPageState extends State<ConfirmPaymentPage> {
                                       ) =>
                                           products,
                                     );
+
+                                    log("DISCOUNT FINAL: $finalDiscount");
                                     return Flexible(
                                       child: Button.filled(
                                         onPressed: () async {
@@ -588,8 +658,9 @@ class _ConfirmPaymentPageState extends State<ConfirmPaymentPage> {
                                               .add(OrderEvent.order(
                                                 items,
                                                 discount,
+                                                finalDiscount.toInt(),
                                                 finalTax.toInt(),
-                                                0,
+                                                finalService.toInt(),
                                                 totalPriceController
                                                     .text.toIntegerFromText,
                                               ));

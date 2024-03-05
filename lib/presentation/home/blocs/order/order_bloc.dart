@@ -1,6 +1,8 @@
+import 'dart:developer';
+
 import 'package:dapur_kampoeng_app/core/extensions/string_text.dart';
 import 'package:dapur_kampoeng_app/data/datasource/auth_local_datasource.dart';
-import 'package:dapur_kampoeng_app/data/datasource/product_local_datasource.dart';
+import 'package:dapur_kampoeng_app/data/datasource/cache_local_datasource.dart';
 import 'package:dapur_kampoeng_app/presentation/home/models/order_model.dart';
 import 'package:dapur_kampoeng_app/presentation/home/models/product_quantity.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,11 +26,13 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       final totalItem = event.items.fold(
           0, (previousValue, element) => previousValue + element.quantity);
       final userData = await AuthLocalDataSource().getAuthData();
+      log("discountAmount: ${event.discountAmount}");
       final dataInput = OrderModel(
           subTotal: subTotal,
           paymentAmount: event.paymentAmount,
           tax: event.tax,
           discount: event.discount,
+          discountAmount: event.discountAmount,
           serviceCharge: event.serviceCharge,
           total: total,
           paymentMethod: 'Cash',
@@ -38,7 +42,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
           transactionTime: DateTime.now().toIso8601String(),
           isSync: 0,
           orderItems: event.items);
-      await ProductLocalDatasource.instance.saveOrder(dataInput);
+      await CacheLocalDatasource.instance.saveOrder(dataInput);
       emit(_Loaded(
         dataInput,
       ));

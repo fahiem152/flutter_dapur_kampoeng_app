@@ -1,4 +1,4 @@
-import 'package:dapur_kampoeng_app/data/datasource/product_local_datasource.dart';
+import 'package:dapur_kampoeng_app/data/datasource/cache_local_datasource.dart';
 import 'package:dapur_kampoeng_app/presentation/settings/blocs/sync_order/sync_order_bloc.dart';
 import 'package:dapur_kampoeng_app/presentation/settings/blocs/sync_product/sync_product_bloc.dart';
 import 'package:flutter/material.dart';
@@ -33,8 +33,8 @@ class _SyncDataPageState extends State<SyncDataPage> {
                   );
                 },
                 loaded: (productResponseModel) {
-                  ProductLocalDatasource.instance.deleteAllProducts();
-                  ProductLocalDatasource.instance.insertProducts(
+                  CacheLocalDatasource.instance.deleteAllProducts();
+                  CacheLocalDatasource.instance.insertProducts(
                     productResponseModel.data!,
                   );
                   ScaffoldMessenger.of(context).showSnackBar(

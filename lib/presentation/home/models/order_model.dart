@@ -9,6 +9,7 @@ class OrderModel {
   final int subTotal;
   final int tax;
   final int discount;
+  final int discountAmount;
   final int serviceCharge;
   final int total;
   final String paymentMethod;
@@ -24,6 +25,7 @@ class OrderModel {
     required this.paymentAmount,
     required this.tax,
     required this.discount,
+    required this.discountAmount,
     required this.serviceCharge,
     required this.total,
     required this.paymentMethod,
@@ -54,6 +56,7 @@ class OrderModel {
       'sub_total': subTotal,
       'tax': tax,
       'discount': discount,
+      'discount_amount': discountAmount,
       'service_charge': serviceCharge,
       'total': total,
       'payment_method': paymentMethod,
@@ -72,6 +75,7 @@ class OrderModel {
       'sub_total': subTotal,
       'tax': tax,
       'discount': discount,
+      'discount_amount': discountAmount,
       'service_charge': serviceCharge,
       'total': total,
       'payment_method': paymentMethod,
@@ -90,6 +94,7 @@ class OrderModel {
       subTotal: map['sub_total']?.toInt() ?? 0,
       tax: map['tax']?.toInt() ?? 0,
       discount: map['discount']?.toInt() ?? 0,
+      discountAmount: map['discount_amount']?.toInt() ?? 0,
       serviceCharge: map['service_charge']?.toInt() ?? 0,
       total: map['total']?.toInt() ?? 0,
       paymentMethod: map['payment_method'] ?? '',
@@ -113,6 +118,7 @@ class OrderModel {
     int? subTotal,
     int? tax,
     int? discount,
+    int? discountAmount,
     int? serviceCharge,
     int? total,
     String? paymentMethod,
@@ -129,6 +135,7 @@ class OrderModel {
       subTotal: subTotal ?? this.subTotal,
       tax: tax ?? this.tax,
       discount: discount ?? this.discount,
+      discountAmount: discountAmount ?? this.discountAmount,
       serviceCharge: serviceCharge ?? this.serviceCharge,
       total: total ?? this.total,
       paymentMethod: paymentMethod ?? this.paymentMethod,

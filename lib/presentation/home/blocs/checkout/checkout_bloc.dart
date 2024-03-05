@@ -1,6 +1,7 @@
 import 'package:dapur_kampoeng_app/data/models/response/discount_response_model.dart';
 import 'package:dapur_kampoeng_app/data/models/response/product_response_model.dart';
 import 'package:dapur_kampoeng_app/presentation/home/models/product_quantity.dart';
+import 'package:dapur_kampoeng_app/presentation/settings/models/discount_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -65,7 +66,7 @@ class CheckoutBloc extends Bloc<CheckoutEvent, CheckoutState> {
     on<_AddServiceCharge>((event, emit) {
       var currentState = state as _Loaded;
       emit(_Loaded(currentState.items, currentState.discount, currentState.tax,
-          currentState.serviceCharge));
+          event.serviceCharge));
     });
   }
 }

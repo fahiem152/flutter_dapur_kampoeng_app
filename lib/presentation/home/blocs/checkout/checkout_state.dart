@@ -6,7 +6,8 @@ class CheckoutState with _$CheckoutState {
   const factory CheckoutState.loading() = _Loading;
   const factory CheckoutState.loaded(
     List<ProductQuantity> items,
-    Discount? discount,
+    DiscountModel? discount,
+    // Discount? discount,
     int tax,
     int serviceCharge,
   ) = _Loaded;

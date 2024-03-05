@@ -1,3 +1,4 @@
+import 'package:dapur_kampoeng_app/presentation/settings/pages/discount_page.dart';
 import 'package:dapur_kampoeng_app/presentation/settings/pages/sync_data_page.dart';
 import 'package:flutter/material.dart';
 
@@ -95,13 +96,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 child: IndexedStack(
                   index: currentIndex,
                   children: [
-                    Container(
-                      height: 100,
-                      width: 100,
-                      decoration: const BoxDecoration(
-                        color: Colors.blue,
-                      ),
-                    ),
+                    DiscountPage(),
                     SyncDataPage(),
                     Container(
                       height: 100,
