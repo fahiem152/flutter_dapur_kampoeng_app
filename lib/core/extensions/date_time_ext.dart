@@ -47,4 +47,20 @@ extension DateTimeExt on DateTime {
 
     return '$day $month $year';
   }
+
+  String toFormattedDate3() {
+    String day = this.day.toString();
+    String month = _monthNames[this.month - 1];
+    String year = this.year.toString();
+    String hour = this
+        .hour
+        .toString()
+        .padLeft(2, '0'); // Menambahkan nol di depan jika jam hanya satu digit
+    String minute = this.minute.toString().padLeft(
+        2, '0'); // Menambahkan nol di depan jika menit hanya satu digit
+    String second = this.second.toString().padLeft(
+        2, '0'); // Menambahkan nol di depan jika detik hanya satu digit
+
+    return '$day $month $year, $hour:$minute:$second';
+  }
 }

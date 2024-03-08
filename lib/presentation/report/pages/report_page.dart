@@ -7,9 +7,11 @@ import 'package:dapur_kampoeng_app/core/extensions/date_time_ext.dart';
 import 'package:dapur_kampoeng_app/core/extensions/int_ext.dart';
 import 'package:dapur_kampoeng_app/core/utils/date_formatter.dart';
 import 'package:dapur_kampoeng_app/presentation/report/blocs/item_sales_report/item_sales_report_bloc.dart';
+import 'package:dapur_kampoeng_app/presentation/report/blocs/product_sales/product_sales_bloc.dart';
 import 'package:dapur_kampoeng_app/presentation/report/blocs/summary_report/summary_report_bloc.dart';
 import 'package:dapur_kampoeng_app/presentation/report/blocs/transaction_report/transaction_report_bloc.dart';
 import 'package:dapur_kampoeng_app/presentation/report/widgets/item_sales_report_widget.dart';
+import 'package:dapur_kampoeng_app/presentation/report/widgets/product_sales_chart_widget.dart';
 import 'package:dapur_kampoeng_app/presentation/report/widgets/report_menu.dart';
 import 'package:dapur_kampoeng_app/presentation/report/widgets/report_title.dart';
 import 'package:dapur_kampoeng_app/presentation/report/widgets/summary_report_widget.dart';
@@ -151,9 +153,25 @@ class _ReportPageState extends State<ReportPage> {
                             isActive: selectedMenu == 1,
                           ),
                           ReportMenu(
-                            label: 'Summary Sales Report',
+                            label: 'Product Sales Chart',
                             onPressed: () {
                               selectedMenu = 2;
+                              title = 'Product Sales Chart';
+                              setState(() {});
+                              context.read<ProductSalesBloc>().add(
+                                    ProductSalesEvent.getProductSales(
+                                        startDate: DateFormatter.formatDateTime(
+                                            fromDate),
+                                        endDate: DateFormatter.formatDateTime(
+                                            toDate)),
+                                  );
+                            },
+                            isActive: selectedMenu == 2,
+                          ),
+                          ReportMenu(
+                            label: 'Summary Sales Report',
+                            onPressed: () {
+                              selectedMenu = 3;
                               title = 'Summary Sales Report';
                               setState(() {});
                               context.read<SummaryReportBloc>().add(
@@ -164,17 +182,8 @@ class _ReportPageState extends State<ReportPage> {
                                             toDate)),
                                   );
                             },
-                            isActive: selectedMenu == 2,
+                            isActive: selectedMenu == 3,
                           ),
-                          // ReportMenu(
-                          //   label: 'Summary Sales Report',
-                          //   onPressed: () {
-                          //     selectedMenu = 3;
-                          //     title = 'Summary Sales Report';
-                          //     setState(() {});
-                          //   },
-                          //   isActive: selectedMenu == 3,
-                          // ),
                         ],
                       ),
                     ),
@@ -259,25 +268,45 @@ class _ReportPageState extends State<ReportPage> {
                             );
                           },
                         )
-                      : BlocBuilder<SummaryReportBloc, SummaryReportState>(
-                          builder: (context, state) {
-                            return state.maybeWhen(
-                              orElse: () => const Center(
-                                child: CircularProgressIndicator(),
-                              ),
-                              error: (message) {
-                                return Text(message);
-                              },
-                              loaded: (summary) {
-                                return SummaryReportWidget(
-                                  summary: summary,
-                                  title: title,
-                                  searchDateFormatted: searchDateFormatted,
+                      : selectedMenu == 2
+                          ? BlocBuilder<ProductSalesBloc, ProductSalesState>(
+                              builder: (context, state) {
+                                return state.maybeWhen(
+                                  orElse: () => const Center(
+                                    child: CircularProgressIndicator(),
+                                  ),
+                                  error: (message) {
+                                    return Text(message);
+                                  },
+                                  loaded: (productSales) {
+                                    return ProductSalesChartWidgets(
+                                      title: title,
+                                      searchDateFormatted: searchDateFormatted,
+                                      productSales: productSales,
+                                    );
+                                  },
                                 );
                               },
-                            );
-                          },
-                        )),
+                            )
+                          : BlocBuilder<SummaryReportBloc, SummaryReportState>(
+                              builder: (context, state) {
+                                return state.maybeWhen(
+                                  orElse: () => const Center(
+                                    child: CircularProgressIndicator(),
+                                  ),
+                                  error: (message) {
+                                    return Text(message);
+                                  },
+                                  loaded: (summary) {
+                                    return SummaryReportWidget(
+                                      summary: summary,
+                                      title: title,
+                                      searchDateFormatted: searchDateFormatted,
+                                    );
+                                  },
+                                );
+                              },
+                            )),
         ],
       ),
     );
@@ -286,6 +315,7 @@ class _ReportPageState extends State<ReportPage> {
   List<Widget> _getTitleReportPageWidget() {
     return [
       _getTitleItemWidget('ID', 120),
+      _getTitleItemWidget('Total', 100),
       _getTitleItemWidget('Sub Total', 100),
       _getTitleItemWidget('Tax', 100),
       _getTitleItemWidget('Disocunt', 100),
@@ -303,6 +333,7 @@ class _ReportPageState extends State<ReportPage> {
       _getTitleItemWidget('Product', 160),
       _getTitleItemWidget('Qty', 60),
       _getTitleItemWidget('Price', 140),
+      _getTitleItemWidget('Total Price', 140),
     ];
   }
 

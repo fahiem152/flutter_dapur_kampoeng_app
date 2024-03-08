@@ -15,8 +15,10 @@ import 'package:dapur_kampoeng_app/presentation/home/blocs/local_product/local_p
 import 'package:dapur_kampoeng_app/presentation/home/blocs/order/order_bloc.dart';
 import 'package:dapur_kampoeng_app/presentation/home/pages/dashboard_page.dart';
 import 'package:dapur_kampoeng_app/presentation/report/blocs/item_sales_report/item_sales_report_bloc.dart';
+import 'package:dapur_kampoeng_app/presentation/report/blocs/product_sales/product_sales_bloc.dart';
 import 'package:dapur_kampoeng_app/presentation/report/blocs/summary_report/summary_report_bloc.dart';
 import 'package:dapur_kampoeng_app/presentation/report/blocs/transaction_report/transaction_report_bloc.dart';
+import 'package:dapur_kampoeng_app/presentation/sales/blocs/day_sales/day_sales_bloc.dart';
 import 'package:dapur_kampoeng_app/presentation/settings/blocs/add_discount/add_discount_bloc.dart';
 import 'package:dapur_kampoeng_app/presentation/settings/blocs/delete_discount/delete_discount_bloc.dart';
 import 'package:dapur_kampoeng_app/presentation/settings/blocs/discount/discount_bloc.dart';
@@ -83,6 +85,12 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => SummaryReportBloc(OrderRemoteDatasource()),
+        ),
+        BlocProvider(
+          create: (context) => DaySalesBloc(CacheLocalDatasource.instance),
+        ),
+        BlocProvider(
+          create: (context) => ProductSalesBloc(OrderItemRemoteDatasource()),
         ),
       ],
       child: MaterialApp(

@@ -49,6 +49,11 @@ dependencies:
   build_runner: ^2.4.8
   flutter_gen_runner: ^5.4.0
   horizontal_data_table: ^4.3.1
+  pie_chart: ^5.4.0
+  open_file_plus: ^3.4.1
+  path_provider: ^2.1.2
+  permission_handler: ^11.3.0
+  pdf: ^3.10.8
   
 
 dev_dependencies:
@@ -81,6 +86,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/fonts/noto-sans.ttf
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -169,10 +169,7 @@ class CacheLocalDatasource {
     });
   }
 
-  Future<List<OrderModel>> getAllOrder(
-    DateTime start,
-    DateTime end,
-  ) async {
+  Future<List<OrderModel>> getAllOrder() async {
     final db = await instance.database;
     final List<Map<String, dynamic>> maps = await db.query(
       tableOrder,
@@ -191,5 +188,15 @@ class CacheLocalDatasource {
   Future<void> deleteAllDiscounts() async {
     final db = await instance.database;
     await db.delete(tableDiscount);
+  }
+
+  Future<void> deleteAllOrders() async {
+    final db = await instance.database;
+    await db.delete(tableOrder);
+  }
+
+  Future<void> deleteAllOrderItems() async {
+    final db = await instance.database;
+    await db.delete(tableOrderItem);
   }
 }
