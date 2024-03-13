@@ -54,6 +54,8 @@ dependencies:
   path_provider: ^2.1.2
   permission_handler: ^11.3.0
   pdf: ^3.10.8
+  esc_pos_utils_plus: ^2.0.3
+  print_bluetooth_thermal: ^1.1.0
   
 
 dev_dependencies:

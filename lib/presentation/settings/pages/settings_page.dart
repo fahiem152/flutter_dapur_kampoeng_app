@@ -1,4 +1,5 @@
 import 'package:dapur_kampoeng_app/presentation/settings/pages/discount_page.dart';
+import 'package:dapur_kampoeng_app/presentation/settings/pages/manage_printer_page.dart';
 import 'package:dapur_kampoeng_app/presentation/settings/pages/sync_data_page.dart';
 import 'package:flutter/material.dart';
 
@@ -81,6 +82,17 @@ class _SettingsPageState extends State<SettingsPage> {
                         : Colors.transparent,
                     onTap: () => indexValue(2),
                   ),
+                  ListTile(
+                    contentPadding: const EdgeInsets.all(12.0),
+                    leading: Assets.icons.kelolaPajak.svg(),
+                    title: const Text('Sinkronisasi Data'),
+                    subtitle: const Text('Sinkronisasi Otomatis Database'),
+                    textColor: AppColors.primary,
+                    tileColor: currentIndex == 3
+                        ? AppColors.blueLight
+                        : Colors.transparent,
+                    onTap: () => indexValue(3),
+                  ),
                 ],
               ),
             ),
@@ -97,7 +109,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   index: currentIndex,
                   children: [
                     DiscountPage(),
-                    SyncDataPage(),
+                    ManagePrinterPage(),
                     Container(
                       height: 100,
                       width: 100,
@@ -105,6 +117,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         color: Colors.red,
                       ),
                     ),
+                    SyncDataPage(),
                     // Text('tax'),
                     // ManageDiscount(),
                     // ManagePrinterPage(),

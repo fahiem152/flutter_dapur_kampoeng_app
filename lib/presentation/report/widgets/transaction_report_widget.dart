@@ -53,7 +53,7 @@ class TransactionReportWidget extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    final status = await checkPermission();
+                    final status = await PermessionHelper().checkPermission();
                     if (status.isGranted) {
                       final pdfFile = await TransactionSalesInvoice.generate(
                           transactionReport, searchDateFormatted);
