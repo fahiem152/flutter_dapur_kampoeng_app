@@ -22,7 +22,8 @@ class ConfirmPaymentPage extends StatefulWidget {
 }
 
 class _ConfirmPaymentPageState extends State<ConfirmPaymentPage> {
-  final totalPriceController = TextEditingController();
+  final totalPriceController = TextEditingController(text: '');
+  String priceExcat = '0';
 
   @override
   Widget build(BuildContext context) {
@@ -444,11 +445,9 @@ class _ConfirmPaymentPageState extends State<ConfirmPaymentPage> {
                                 final total = subTotal + tax;
 
                                 totalPriceController.text =
-                                    total.ceil().toString();
-                                log("bbsubTotal: $subTotal");
-                                log("bbtax: $tax");
-                                log("bbtotal: $total");
-                                log("bbtotalPriceController .text.toIntegerFromText,: ${totalPriceController.text.toIntegerFromText}");
+                                    total.ceil().currencyFormatRp;
+                                priceExcat = total.ceil().toString();
+
                                 return Text(
                                   total.ceil().currencyFormatRp,
                                   style: const TextStyle(
@@ -547,24 +546,66 @@ class _ConfirmPaymentPageState extends State<ConfirmPaymentPage> {
                               ),
                             ),
                             const SpaceHeight(45.0),
-                            Row(
+                            Wrap(
+                              spacing: 20.0, // Jarak horizontal antara widget
+                              runSpacing:
+                                  10.0, // Jarak vertikal antara baris widget
                               children: [
                                 Button.filled(
                                   width: 150.0,
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    totalPriceController.text =
+                                        int.parse(priceExcat).currencyFormatRp;
+                                  },
                                   label: 'UANG PAS',
                                 ),
-                                const SpaceWidth(20.0),
                                 Button.filled(
                                   width: 150.0,
-                                  onPressed: () {},
-                                  label: 'Rp 250.000',
+                                  onPressed: () {
+                                    totalPriceController.text =
+                                        10000.currencyFormatRp;
+                                  },
+                                  label: 'Rp 10.000',
                                 ),
-                                const SpaceWidth(20.0),
                                 Button.filled(
                                   width: 150.0,
-                                  onPressed: () {},
-                                  label: 'Rp 300.000',
+                                  onPressed: () {
+                                    totalPriceController.text =
+                                        20000.currencyFormatRp;
+                                  },
+                                  label: 'Rp 20.000',
+                                ),
+                                Button.filled(
+                                  width: 150.0,
+                                  onPressed: () {
+                                    totalPriceController.text =
+                                        50000.currencyFormatRp;
+                                  },
+                                  label: 'Rp 50.000',
+                                ),
+                                Button.filled(
+                                  width: 150.0,
+                                  onPressed: () {
+                                    totalPriceController.text =
+                                        75000.currencyFormatRp;
+                                  },
+                                  label: 'Rp 75.000',
+                                ),
+                                ...List.generate(
+                                  10,
+                                  (index) {
+                                    final nominal = (index + 1) * 100000;
+                                    return Button.filled(
+                                      width: 150.0,
+                                      onPressed: () {
+                                        totalPriceController.text =
+                                            nominal.currencyFormatRp;
+                                        print(
+                                            'Tombol dengan nominal Rp ${nominal.currencyFormatRp} ditekan');
+                                      },
+                                      label: nominal.currencyFormatRp,
+                                    );
+                                  },
                                 ),
                               ],
                             ),
@@ -633,10 +674,6 @@ class _ConfirmPaymentPageState extends State<ConfirmPaymentPage> {
 
                                     final finalTax = subTotal * 0.11;
 
-                                    // log("zzprice: $price");
-                                    // log("zzsubTotal: $subTotal");
-                                    // log("zzfinalTax: $finalTax");
-                                    // log("zztotalPriceController .text.toIntegerFromText,: ${totalPriceController.text.toIntegerFromText}");
                                     List<ProductQuantity> items =
                                         state.maybeWhen(
                                       orElse: () => [],
