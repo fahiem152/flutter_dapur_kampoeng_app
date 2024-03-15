@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dapur_kampoeng_app/core/extensions/build_context_ext.dart';
 import 'package:dapur_kampoeng_app/core/extensions/int_ext.dart';
 import 'package:dapur_kampoeng_app/core/extensions/string_text.dart';
@@ -77,21 +79,22 @@ class _HomePageState extends State<HomePage> {
                         HomeTitle(
                           controller: searchController,
                           onChanged: (value) {
-                            // searchResults = products
-                            //     .where((e) => e.name
-                            //         .toLowerCase()
-                            //         .contains(value.toLowerCase()))
-                            //     .toList();
-                            // setState(() {});
+                            searchController.text = value;
+                            // // searchResults = products
+                            // //     .where((e) => e.name
+                            // //         .toLowerCase()
+                            // //         .contains(value.toLowerCase()))
+                            // //     .toList();
+                            log("searchController: $value");
+                            setState(() {});
                           },
                         ),
                         const SizedBox(height: 24),
                         CustomTabBar(
                           tabTitles: const [
                             'Semua',
-                            'Makanan',
                             'Minuman',
-                            'Snack'
+                            'Makanan',
                           ],
                           initialTabIndex: 0,
                           tabViews: [
@@ -120,23 +123,41 @@ class _HomePageState extends State<HomePage> {
                                       );
                                     }
                                     return GridView.builder(
-                                      shrinkWrap: true,
-                                      itemCount: products.length,
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      gridDelegate:
-                                          const SliverGridDelegateWithFixedCrossAxisCount(
-                                        childAspectRatio: 0.85,
-                                        crossAxisCount: 3,
-                                        crossAxisSpacing: 30.0,
-                                        mainAxisSpacing: 30.0,
-                                      ),
-                                      itemBuilder: (context, index) =>
-                                          ProductCard(
-                                        data: products[index],
-                                        onCartButton: () {},
-                                      ),
-                                    );
+                                        shrinkWrap: true,
+                                        itemCount: searchController.text == ''
+                                            ? products.length
+                                            : products
+                                                .where((element) => element
+                                                    .name!
+                                                    .toLowerCase()
+                                                    .contains(
+                                                        searchController.text))
+                                                .toList()
+                                                .length,
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        gridDelegate:
+                                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                          childAspectRatio: 0.85,
+                                          crossAxisCount: 3,
+                                          crossAxisSpacing: 30.0,
+                                          mainAxisSpacing: 30.0,
+                                        ),
+                                        itemBuilder: (context, index) {
+                                          return ProductCard(
+                                            data: searchController.text == ''
+                                                ? products[index]
+                                                : products
+                                                    .where((element) => element
+                                                        .name!
+                                                        .toLowerCase()
+                                                        .contains(
+                                                            searchController
+                                                                .text))
+                                                    .toList()[index],
+                                            onCartButton: () {},
+                                          );
+                                        });
                                   });
                                 },
                               ),
@@ -370,7 +391,7 @@ class _HomePageState extends State<HomePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text(
-                            'Orders #1',
+                            'Orders #',
                             style: TextStyle(
                               color: AppColors.primary,
                               fontSize: 20,

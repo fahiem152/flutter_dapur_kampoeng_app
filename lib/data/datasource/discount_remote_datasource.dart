@@ -39,7 +39,8 @@ class DiscountRemoteDatasource {
       'value': value.toString(),
       'type': 'percentage',
     });
-
+    log("Response Code; ${response.statusCode}");
+    log("Response body; ${response.body}");
     if (response.statusCode == 201) {
       return const Right(true);
     } else {

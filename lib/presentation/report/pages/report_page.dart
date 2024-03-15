@@ -53,67 +53,64 @@ class _ReportPageState extends State<ReportPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const ReportTitle(),
-                    Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Flexible(
-                            child: CustomDatePicker(
-                              prefix: const Text('From: '),
-                              initialDate: fromDate,
-                              onDateSelected: (selectedDate) {
-                                fromDate = selectedDate;
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Flexible(
+                          child: CustomDatePicker(
+                            prefix: const Text('From: '),
+                            initialDate: fromDate,
+                            onDateSelected: (selectedDate) {
+                              fromDate = selectedDate;
 
-                                setState(() {});
-                                // context.read<TransactionReportBloc>().add(
-                                //       TransactionReportEvent.getReport(
-                                //           startDate:
-                                //               DateFormatter.formatDateTime(
-                                //                   fromDate),
-                                //           endDate: DateFormatter.formatDateTime(
-                                //               toDate)),
-                                //     );
-                                // context.read<ItemSalesReportBloc>().add(
-                                //       ItemSalesReportEvent.getItemSales(
-                                //           startDate:
-                                //               DateFormatter.formatDateTime(
-                                //                   fromDate),
-                                //           endDate: DateFormatter.formatDateTime(
-                                //               toDate)),
-                                //     );
-                              },
-                            ),
+                              setState(() {});
+                              // context.read<TransactionReportBloc>().add(
+                              //       TransactionReportEvent.getReport(
+                              //           startDate:
+                              //               DateFormatter.formatDateTime(
+                              //                   fromDate),
+                              //           endDate: DateFormatter.formatDateTime(
+                              //               toDate)),
+                              //     );
+                              // context.read<ItemSalesReportBloc>().add(
+                              //       ItemSalesReportEvent.getItemSales(
+                              //           startDate:
+                              //               DateFormatter.formatDateTime(
+                              //                   fromDate),
+                              //           endDate: DateFormatter.formatDateTime(
+                              //               toDate)),
+                              //     );
+                            },
                           ),
-                          const SpaceWidth(100.0),
-                          Flexible(
-                            child: CustomDatePicker(
-                              prefix: const Text('To: '),
-                              initialDate: toDate,
-                              onDateSelected: (selectedDate) {
-                                toDate = selectedDate;
-                                setState(() {});
-                                // context.read<TransactionReportBloc>().add(
-                                //       TransactionReportEvent.getReport(
-                                //           startDate:
-                                //               DateFormatter.formatDateTime(
-                                //                   fromDate),
-                                //           endDate: DateFormatter.formatDateTime(
-                                //               toDate)),
-                                //     );
-                                // context.read<ItemSalesReportBloc>().add(
-                                //       ItemSalesReportEvent.getItemSales(
-                                //           startDate:
-                                //               DateFormatter.formatDateTime(
-                                //                   fromDate),
-                                //           endDate: DateFormatter.formatDateTime(
-                                //               toDate)),
-                                //     );
-                              },
-                            ),
+                        ),
+                        const SpaceWidth(24.0),
+                        Flexible(
+                          child: CustomDatePicker(
+                            prefix: const Text('To: '),
+                            initialDate: toDate,
+                            onDateSelected: (selectedDate) {
+                              toDate = selectedDate;
+                              setState(() {});
+                              // context.read<TransactionReportBloc>().add(
+                              //       TransactionReportEvent.getReport(
+                              //           startDate:
+                              //               DateFormatter.formatDateTime(
+                              //                   fromDate),
+                              //           endDate: DateFormatter.formatDateTime(
+                              //               toDate)),
+                              //     );
+                              // context.read<ItemSalesReportBloc>().add(
+                              //       ItemSalesReportEvent.getItemSales(
+                              //           startDate:
+                              //               DateFormatter.formatDateTime(
+                              //                   fromDate),
+                              //           endDate: DateFormatter.formatDateTime(
+                              //               toDate)),
+                              //     );
+                            },
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                     Padding(
                       padding: const EdgeInsets.all(15.0),

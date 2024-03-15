@@ -71,27 +71,27 @@ class _SettingsPageState extends State<SettingsPage> {
                         : Colors.transparent,
                     onTap: () => indexValue(1),
                   ),
-                  ListTile(
-                    contentPadding: const EdgeInsets.all(12.0),
-                    leading: Assets.icons.kelolaPajak.svg(),
-                    title: const Text('Perhitungan Biaya'),
-                    subtitle: const Text('Kelola biaya diluar biaya modal'),
-                    textColor: AppColors.primary,
-                    tileColor: currentIndex == 2
-                        ? AppColors.blueLight
-                        : Colors.transparent,
-                    onTap: () => indexValue(2),
-                  ),
+                  // ListTile(
+                  //   contentPadding: const EdgeInsets.all(12.0),
+                  //   leading: Assets.icons.kelolaPajak.svg(),
+                  //   title: const Text('Perhitungan Biaya'),
+                  //   subtitle: const Text('Kelola biaya diluar biaya modal'),
+                  //   textColor: AppColors.primary,
+                  //   tileColor: currentIndex == 2
+                  //       ? AppColors.blueLight
+                  //       : Colors.transparent,
+                  //   onTap: () => indexValue(2),
+                  // ),
                   ListTile(
                     contentPadding: const EdgeInsets.all(12.0),
                     leading: Assets.icons.kelolaPajak.svg(),
                     title: const Text('Sinkronisasi Data'),
                     subtitle: const Text('Sinkronisasi Otomatis Database'),
                     textColor: AppColors.primary,
-                    tileColor: currentIndex == 3
+                    tileColor: currentIndex == 2
                         ? AppColors.blueLight
                         : Colors.transparent,
-                    onTap: () => indexValue(3),
+                    onTap: () => indexValue(2),
                   ),
                 ],
               ),
@@ -110,13 +110,13 @@ class _SettingsPageState extends State<SettingsPage> {
                   children: [
                     DiscountPage(),
                     ManagePrinterPage(),
-                    Container(
-                      height: 100,
-                      width: 100,
-                      decoration: const BoxDecoration(
-                        color: Colors.red,
-                      ),
-                    ),
+                    // Container(
+                    //   height: 100,
+                    //   width: 100,
+                    //   decoration: const BoxDecoration(
+                    //     color: Colors.red,
+                    //   ),
+                    // ),
                     SyncDataPage(),
                     // Text('tax'),
                     // ManageDiscount(),

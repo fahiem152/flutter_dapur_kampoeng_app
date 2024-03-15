@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dapur_kampoeng_app/core/assets/assets.gen.dart';
 import 'package:dapur_kampoeng_app/core/constants/variables.dart';
 import 'package:dapur_kampoeng_app/core/extensions/int_ext.dart';
