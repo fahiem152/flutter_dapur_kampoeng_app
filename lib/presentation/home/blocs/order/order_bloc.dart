@@ -21,7 +21,8 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
           (previousValue, element) =>
               previousValue +
               (element.product.price!.toIntegerFromText * element.quantity));
-      final total = subTotal + event.tax + event.serviceCharge - event.discount;
+      final total =
+          subTotal + event.tax + event.serviceCharge - event.discountAmount;
 
       final totalItem = event.items.fold(
           0, (previousValue, element) => previousValue + element.quantity);
